@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const AnimatedText = ({ initialText }) => {
+const AnimatedText = ({ text, path }) => {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const elementRef = useRef(null);
     const timeoutRef = useRef(null);
@@ -20,25 +20,25 @@ const AnimatedText = ({ initialText }) => {
                         .split("")
                         .map((letter, index) => {
                             if (index < iteration) {
-                                return initialText[index];
+                                return text[index];
                             }
                             return letters[Math.floor(Math.random() * 26)];
                         })
                         .join("");
 
-                    if (iteration >= initialText.length) {
+                    if (iteration >= text.length) {
                         clearInterval(intervalRef.current);
                     }
 
                     iteration += 1 / 3;
-                }, 150 / initialText.length);
+                }, 150 / text.length);
             }, 100); // Delay before starting the animation (300 milliseconds)
         };
 
         const handleMouseOut = () => {
             clearTimeout(timeoutRef.current); // Clear the timeout if mouse leaves before the animation starts
             clearInterval(intervalRef.current);
-            element.innerText = initialText;
+            element.innerText = text;
         };
 
         element.addEventListener("mouseover", handleMouseOver);
@@ -50,9 +50,9 @@ const AnimatedText = ({ initialText }) => {
             element.removeEventListener("mouseover", handleMouseOver);
             element.removeEventListener("mouseout", handleMouseOut);
         };
-    }, [initialText]);
+    }, [text]);
 
-    return <a ref={elementRef} href="/#">{initialText}</a>;
+    return <a ref={elementRef} href={path}>{text}</a>;
 };
 
 export default AnimatedText;

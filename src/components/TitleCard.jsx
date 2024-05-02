@@ -54,10 +54,10 @@ function TitleCard() {
                     <div className="flex justify-between"></div>
                     <ul className="flex justify-between mt-5">
                         <li>
-                            <AnimatedText initialText="INFO" />
+                            <AnimatedText text="INFO" path="/info"/>
                         </li>
                         <li>
-                            <AnimatedText initialText="CONTACT" />
+                            <AnimatedText text="CONTACT" path="/contact"/>
                         </li>
                     </ul>
                 </nav>

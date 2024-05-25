@@ -2,6 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+body {
+  background-color: #000;
+  margin: 0;
+  overflow: hidden;
+}
+
 .App {
   min-height: 100vh;
   background-color: #000;

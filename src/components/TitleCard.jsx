@@ -20,7 +20,7 @@ function TitleCard() {
         setIsSpinning(true);
         setTimeout(() => {
             setIsSpinning(false);
-        }, 1500);
+        }, 150000000);
     };
 
     return (
@@ -56,7 +56,7 @@ function TitleCard() {
             </div>
             <div>
                 <figure data-track="nav" className="h-[120vh] flex items-end justify-center pb-[20vh]">
-                    {showScrollText && <p data-a="scrollExp" className="scrollExp fixed text-[10px] pb-5 text-white">SCROLL TO EXPLORE</p>}
+                    {showScrollText && <p data-a="scrollExp" className="scrollExp z-20 fixed text-[10px] pb-5 text-white">SCROLL TO EXPLORE</p>}
                 </figure>
                 <Header title="Experience" link="/experience"/>
                 <Header title="Projects" link="/projects"/>

@@ -41,3 +41,9 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+
+/* Example CSS for slide-up transition */
+.slide-up {
+    transform: translateY(-100%);
+    transition: transform 1s ease-in-out;
+}

@@ -8,19 +8,25 @@ function TitleCard() {
     const [showScrollText, setShowScrollText] = useState(true);
     const [isSpinning, setIsSpinning] = useState(false);
 
+    const targetScrollPosition = 1500; // Change this value to set the point where scaling should start increasing again
+
     const lenis = useLenis(({ scroll }) => {
         setScrollPosition(scroll);
         setShowScrollText(scroll === 0);
     });
 
-    const navScale = 1 - (scrollPosition * 0.00135);
-    const navOpacity = 1 - (scrollPosition * 0.001);
+    let navScale;
+    let navOpacity;
+    if (scrollPosition <= targetScrollPosition) {
+        navScale = Math.max(1 - (scrollPosition * 0.00135), 0.7); // Scale down but not below 0.7
+        navOpacity = Math.max(1 - (scrollPosition * 0.001), 0.5); // Adjust opacity if needed
+    } else {
+        navScale = Math.min(0.7 + ((scrollPosition - targetScrollPosition) * 0.00135), 1); // Scale back up but not above 1
+        navOpacity = Math.min(0.5 + ((scrollPosition - targetScrollPosition) * 0.001), 1); // Scale back up but not above 1
+    }
 
     const handleSVGClick = () => {
-        setIsSpinning(true);
-        setTimeout(() => {
-            setIsSpinning(false);
-        }, 150000000);
+        setIsSpinning(!isSpinning);
     };
 
     return (

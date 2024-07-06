@@ -41,9 +41,16 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+.transition-cover {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  transition: bottom 0.5s ease-in-out;
+}
 
-/* Example CSS for slide-up transition */
-.slide-up {
-    transform: translateY(-100%);
-    transition: transform 1s ease-in-out;
+.transition-cover.slide-up {
+  bottom: 0;
 }

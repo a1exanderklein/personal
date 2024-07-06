@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { ReactLenis, useLenis } from 'lenis/react';
+import { useState, useEffect } from 'react';
+import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import AnimatedText from '../utils/AnimatedText';
 import Header from './Header';
 
@@ -7,8 +7,14 @@ function TitleCard() {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showScrollText, setShowScrollText] = useState(true);
     const [isSpinning, setIsSpinning] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     const targetScrollPosition = 1500; // Change this value to set the point where scaling should start increasing again
+
+    useEffect(() => {
+        // Scroll to the top when the component mounts
+        window.scrollTo(0, 0);
+    }, []);
 
     const lenis = useLenis(({ scroll }) => {
         setScrollPosition(scroll);
@@ -19,14 +25,21 @@ function TitleCard() {
     let navOpacity;
     if (scrollPosition <= targetScrollPosition) {
         navScale = Math.max(1 - (scrollPosition * 0.00135), 0.7); // Scale down but not below 0.7
-        navOpacity = Math.max(1 - (scrollPosition * 0.001), 0.5); // Adjust opacity if needed
+        navOpacity = Math.max(1 - (scrollPosition * 0.001), 0.7); // Adjust opacity if needed
     } else {
         navScale = Math.min(0.7 + ((scrollPosition - targetScrollPosition) * 0.00135), 1); // Scale back up but not above 1
-        navOpacity = Math.min(0.5 + ((scrollPosition - targetScrollPosition) * 0.001), 1); // Scale back up but not above 1
+        navOpacity = Math.min(0.7 + ((scrollPosition - targetScrollPosition) * 0.001), 1); // Scale back up but not above 1
     }
 
     const handleSVGClick = () => {
         setIsSpinning(!isSpinning);
+    };
+
+    const handleTransition = () => {
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setIsTransitioning(false);
+        }, 1000);
     };
 
     return (
@@ -52,21 +65,22 @@ function TitleCard() {
                     <div className="flex justify-between"></div>
                     <ul className="flex justify-between mt-5">
                         <li>
-                            <AnimatedText text="INFO" path="/info"/>
+                            <AnimatedText text="INFO" path="/info" />
                         </li>
                         <li>
-                            <AnimatedText text="CONTACT" path="/contact"/>
+                            <AnimatedText text="CONTACT" path="/contact" />
                         </li>
                     </ul>
                 </nav>
             </div>
             <div>
+                <div className={`transition-cover ${isTransitioning ? 'slide-up' : ''} bg-[#EEEEEA]`}></div>
                 <figure data-track="nav" className="h-[120vh] flex items-end justify-center pb-[20vh]">
                     {showScrollText && <p data-a="scrollExp" className="scrollExp z-20 fixed text-[10px] pb-5 text-white">SCROLL TO EXPLORE</p>}
                 </figure>
-                <Header title="Experience" link="/experience"/>
-                <Header title="Projects" link="/projects"/>
-                <Header title="Leadership" link="/leadership"/>
+                <Header title="Experience" link="/experience" handleTransition={handleTransition} />
+                <Header title="Projects" link="/projects" handleTransition={handleTransition} />
+                <Header title="Leadership" link="/leadership" handleTransition={handleTransition} />
                 <figure data-track="nav" className="h-[120vh] flex items-end justify-center pb-[20vh]"></figure>
             </div>
         </ReactLenis>

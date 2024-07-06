@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ReactLenis, useLenis } from 'lenis/react';
+import { ReactLenis, useLenis } from '@studio-freight/react-lenis'
+import AnimatedText from '../utils/AnimatedText';
 
 function Experience() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -25,6 +26,9 @@ function Experience() {
 
   return (
     <ReactLenis root>
+      <div className="fixed top-8 right-20 text-xs mix-blend-difference text-white">
+        <AnimatedText text="CLOSE" path="/" />
+      </div>
       <div className='text-black'>
         {/* Title Section */}
         <div className='flex w-screen h-screen flex items-center justify-center'> 

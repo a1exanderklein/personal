@@ -2,10 +2,19 @@ import { useState, useEffect } from 'react';
 import { ReactLenis, useLenis } from 'lenis/react';
 import ProjectCard from '../components/ProjectCard';
 import { SiCoursera, SiCplusplus, SiCss3, SiGooglegemini, SiHtml5, SiJavascript, SiOpenai, SiPython, SiReact } from "react-icons/si";
+import AnimatedText from '../utils/AnimatedText';
 
 function Projects() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollText, setShowScrollText] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleTransition = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+        setIsTransitioning(false);
+    }, 1000);
+  };
 
   const projects = [
     {
@@ -84,6 +93,10 @@ function Projects() {
 
   return (
     <ReactLenis root>
+      <div className={`transition-cover ${isTransitioning ? 'slide-up' : ''} bg-black`}></div>
+      <div className="fixed top-8 right-20 text-xs mix-blend-difference text-white">
+        <AnimatedText handleTransition={handleTransition} text="CLOSE" path="/" />
+      </div>
       <div className='text-black'>
         <div className='flex w-screen h-screen flex items-center justify-center'> 
           <h1 className='text-[14vw] uppercase'>Projects</h1>
